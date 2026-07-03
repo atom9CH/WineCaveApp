@@ -60,6 +60,8 @@ struct Wine: Identifiable, Codable {
     var status: WineStatus
     var createdAt: Date
     var updatedAt: Date
+    /// Nur befüllt, wenn die Abfrage "tasting(rating)" mit-selektiert (siehe WineListViewModel)
+    var tastings: [TastingRating]?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -77,7 +79,18 @@ struct Wine: Identifiable, Codable {
         case status
         case createdAt = "created_at"
         case updatedAt = "updated_at"
+        case tastings = "tasting"
     }
+
+    var averageRating: Double? {
+        guard let tastings, !tastings.isEmpty else { return nil }
+        let sum = tastings.reduce(0) { $0 + $1.rating }
+        return Double(sum) / Double(tastings.count)
+    }
+}
+
+struct TastingRating: Codable {
+    let rating: Int
 }
 
 struct GrapeVariety: Identifiable, Codable {

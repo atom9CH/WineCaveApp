@@ -5,6 +5,7 @@ struct WineDetailView: View {
     @Environment(\.dismiss) private var dismiss
     var onSaved: () -> Void
     @State private var showDeleteConfirmation = false
+    @State private var showDrinkSheet = false
 
     init(wine: Wine, onSaved: @escaping () -> Void) {
         _viewModel = StateObject(wrappedValue: WineDetailViewModel(wine: wine))
@@ -13,6 +14,15 @@ struct WineDetailView: View {
 
     var body: some View {
         Form {
+            Section {
+                Button {
+                    showDrinkSheet = true
+                } label: {
+                    Label("Drink a Bottle", systemImage: "wineglass.fill")
+                }
+                .disabled(viewModel.currentQuantity <= 0)
+            }
+
             Section("Wine") {
                 TextField("Name", text: $viewModel.name)
                 Picker("Type", selection: $viewModel.type) {
@@ -37,6 +47,47 @@ struct WineDetailView: View {
                     viewModel.grapeVarieties.append("")
                 } label: {
                     Label("Add grape variety", systemImage: "plus.circle")
+                }
+            }
+
+            Section("Tasting History") {
+                if viewModel.tastings.isEmpty {
+                    Text("No tastings yet")
+                        .foregroundStyle(.secondary)
+                        .font(.caption)
+                } else {
+                    ForEach(viewModel.tastings) { tasting in
+                        HStack(alignment: .top, spacing: 10) {
+                            if let photoURL = tasting.photoURL, let url = URL(string: photoURL) {
+                                AsyncImage(url: url) { image in
+                                    image.resizable().scaledToFill()
+                                } placeholder: {
+                                    Color.gray.opacity(0.15)
+                                }
+                                .frame(width: 44, height: 44)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            }
+                            VStack(alignment: .leading, spacing: 4) {
+                                HStack {
+                                    ForEach(0..<5) { star in
+                                        Image(systemName: star < tasting.rating ? "star.fill" : "star")
+                                            .font(.system(size: 12))
+                                            .foregroundStyle(.yellow)
+                                    }
+                                    Spacer()
+                                    Text(tasting.tastedAt, style: .date)
+                                        .font(.caption2)
+                                        .foregroundStyle(.secondary)
+                                }
+                                if let note = tasting.note, !note.isEmpty {
+                                    Text(note)
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                        }
+                        .padding(.vertical, 2)
+                    }
                 }
             }
 
@@ -89,6 +140,15 @@ struct WineDetailView: View {
         .disabled(viewModel.isSaving)
         .task {
             await viewModel.loadGrapeVarieties()
+            await viewModel.loadTastings()
+        }
+        .sheet(isPresented: $showDrinkSheet) {
+            DrinkWineView(wineId: viewModel.wineId, currentQuantity: viewModel.currentQuantity) {
+                Task {
+                    await viewModel.reloadAfterDrink()
+                    onSaved()
+                }
+            }
         }
         .alert("Delete this wine?", isPresented: $showDeleteConfirmation) {
             Button("Delete", role: .destructive) {

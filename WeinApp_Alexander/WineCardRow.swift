@@ -40,6 +40,9 @@ struct WineCardRow: View {
                     if let country = wine.country, !country.isEmpty {
                         Text("· \(country)")
                     }
+                    if let rating = wine.averageRating {
+                        Text("· ★ \(String(format: "%.1f", rating))")
+                    }
                 }
                 .font(.caption)
                 .foregroundStyle(.secondary)

@@ -43,7 +43,7 @@ final class WineListViewModel: ObservableObject {
         do {
             let response: [Wine] = try await SupabaseService.client
                 .from("wine")
-                .select()
+                .select("*, tasting(rating)")
                 .order("created_at", ascending: false)
                 .execute()
                 .value

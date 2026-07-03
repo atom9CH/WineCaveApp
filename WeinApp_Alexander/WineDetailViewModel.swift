@@ -16,6 +16,7 @@ final class WineDetailViewModel: ObservableObject {
     @Published var purchaseLocationOtherText = ""
     @Published var currentQuantity = 1
     @Published var grapeVarieties: [String] = [""]
+    @Published var tastings: [Tasting] = []
 
     @Published var isSaving = false
     @Published var errorMessage: String?
@@ -47,6 +48,37 @@ final class WineDetailViewModel: ObservableObject {
                 .value
             let names = result.map { $0.name }
             grapeVarieties = names.isEmpty ? [""] : names
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    func loadTastings() async {
+        do {
+            tastings = try await SupabaseService.client
+                .from("tasting")
+                .select()
+                .eq("wine_id", value: wineId)
+                .order("tasted_at", ascending: false)
+                .execute()
+                .value
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    /// Nach dem Trinken einer Flasche: Menge + Historie neu laden
+    func reloadAfterDrink() async {
+        await loadTastings()
+        do {
+            let refreshed: Wine = try await SupabaseService.client
+                .from("wine")
+                .select()
+                .eq("id", value: wineId)
+                .single()
+                .execute()
+                .value
+            currentQuantity = refreshed.currentQuantity
         } catch {
             errorMessage = error.localizedDescription
         }
