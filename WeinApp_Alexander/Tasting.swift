@@ -3,7 +3,7 @@ import Foundation
 struct Tasting: Identifiable, Codable {
     let id: UUID
     var wineId: UUID
-    var rating: Int
+    var rating: Int?
     var note: String?
     var photoURL: String?
     var tastedAt: Date

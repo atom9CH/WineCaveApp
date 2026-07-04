@@ -83,14 +83,14 @@ struct Wine: Identifiable, Codable {
     }
 
     var averageRating: Double? {
-        guard let tastings, !tastings.isEmpty else { return nil }
-        let sum = tastings.reduce(0) { $0 + $1.rating }
-        return Double(sum) / Double(tastings.count)
+        let ratings = (tastings ?? []).compactMap { $0.rating }
+        guard !ratings.isEmpty else { return nil }
+        return Double(ratings.reduce(0, +)) / Double(ratings.count)
     }
 }
 
 struct TastingRating: Codable {
-    let rating: Int
+    let rating: Int?
 }
 
 struct GrapeVariety: Identifiable, Codable {

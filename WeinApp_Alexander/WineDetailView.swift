@@ -18,7 +18,7 @@ struct WineDetailView: View {
                 Button {
                     showDrinkSheet = true
                 } label: {
-                    Label("Drink a Bottle", systemImage: "wineglass.fill")
+                    Label("Rate & Drink", systemImage: "star.fill")
                 }
                 .disabled(viewModel.currentQuantity <= 0)
             }
@@ -69,10 +69,16 @@ struct WineDetailView: View {
                             }
                             VStack(alignment: .leading, spacing: 4) {
                                 HStack {
-                                    ForEach(0..<5) { star in
-                                        Image(systemName: star < tasting.rating ? "star.fill" : "star")
-                                            .font(.system(size: 12))
-                                            .foregroundStyle(.yellow)
+                                    if let rating = tasting.rating {
+                                        ForEach(0..<5) { star in
+                                            Image(systemName: star < rating ? "star.fill" : "star")
+                                                .font(.system(size: 12))
+                                                .foregroundStyle(.yellow)
+                                        }
+                                    } else {
+                                        Text("Consumed, no rating")
+                                            .font(.caption2)
+                                            .foregroundStyle(.secondary)
                                     }
                                     Spacer()
                                     Text(tasting.tastedAt, style: .date)

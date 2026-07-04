@@ -2,6 +2,16 @@ import Foundation
 import Combine
 import Supabase
 
+enum WineSortOption: String, CaseIterable, Identifiable {
+    case newest = "Newest first"
+    case nameAZ = "Name (A–Z)"
+    case vintageNewest = "Vintage (newest)"
+    case vintageOldest = "Vintage (oldest)"
+    case ratingHighest = "Top rated"
+
+    var id: String { rawValue }
+}
+
 @MainActor
 final class WineListViewModel: ObservableObject {
     @Published var wines: [Wine] = []
@@ -10,9 +20,28 @@ final class WineListViewModel: ObservableObject {
 
     @Published var searchText = ""
     @Published var filterStorageLocation: StorageLocation?
+    @Published var filterTypes: Set<WineType> = []
+    @Published var sortOption: WineSortOption = .newest
+
+    var activeFilterCount: Int {
+        (filterStorageLocation == nil ? 0 : 1) + filterTypes.count
+    }
+
+    func toggleType(_ type: WineType) {
+        if filterTypes.contains(type) {
+            filterTypes.remove(type)
+        } else {
+            filterTypes.insert(type)
+        }
+    }
+
+    func resetFilters() {
+        filterStorageLocation = nil
+        filterTypes = []
+    }
 
     var filteredWines: [Wine] {
-        wines.filter { wine in
+        let base = wines.filter { wine in
             let query = searchText.trimmingCharacters(in: .whitespaces).lowercased()
             let matchesSearch: Bool
             if query.isEmpty {
@@ -25,7 +54,21 @@ final class WineListViewModel: ObservableObject {
                     || (wine.vintage.map { String($0) }?.contains(query) ?? false)
             }
             let matchesStorage = filterStorageLocation == nil || wine.storageLocation == filterStorageLocation
-            return matchesSearch && matchesStorage
+            let matchesType = filterTypes.isEmpty || (wine.type.map { filterTypes.contains($0) } ?? false)
+            return matchesSearch && matchesStorage && matchesType
+        }
+
+        switch sortOption {
+        case .newest:
+            return base
+        case .nameAZ:
+            return base.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+        case .vintageNewest:
+            return base.sorted { ($0.vintage ?? 0) > ($1.vintage ?? 0) }
+        case .vintageOldest:
+            return base.sorted { ($0.vintage ?? Int.max) < ($1.vintage ?? Int.max) }
+        case .ratingHighest:
+            return base.sorted { ($0.averageRating ?? -1) > ($1.averageRating ?? -1) }
         }
     }
 

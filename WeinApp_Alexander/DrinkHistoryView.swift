@@ -1,18 +1,18 @@
 import SwiftUI
 
-struct ReviewOverviewView: View {
-    @StateObject private var viewModel = ReviewOverviewViewModel()
+struct DrinkHistoryView: View {
+    @StateObject private var viewModel = DrinkHistoryViewModel()
 
     var body: some View {
         Group {
             if viewModel.isLoading {
-                ProgressView("Loading reviews…")
+                ProgressView("Loading history…")
             } else if let error = viewModel.errorMessage {
                 Text(error)
                     .foregroundStyle(.red)
                     .font(.caption)
             } else if viewModel.tastings.isEmpty {
-                Text("No reviews yet")
+                Text("No drink history yet")
                     .foregroundStyle(.secondary)
             } else {
                 List(viewModel.tastings) { tasting in
@@ -23,7 +23,7 @@ struct ReviewOverviewView: View {
                             } placeholder: {
                                 Color.gray.opacity(0.15)
                             }
-                            .frame(width: 48, height: 48)
+                            .frame(width: 44, height: 44)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
                         VStack(alignment: .leading, spacing: 4) {
@@ -35,12 +35,18 @@ struct ReviewOverviewView: View {
                                     .font(.caption2)
                                     .foregroundStyle(.secondary)
                             }
-                            HStack(spacing: 2) {
-                                ForEach(0..<5) { star in
-                                    Image(systemName: star < (tasting.rating ?? 0) ? "star.fill" : "star")
-                                        .font(.system(size: 12))
-                                        .foregroundStyle(.yellow)
+                            if let rating = tasting.rating {
+                                HStack(spacing: 2) {
+                                    ForEach(0..<5) { star in
+                                        Image(systemName: star < rating ? "star.fill" : "star")
+                                            .font(.system(size: 12))
+                                            .foregroundStyle(.yellow)
+                                    }
                                 }
+                            } else {
+                                Text("Consumed, no rating")
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
                             }
                             if let note = tasting.note, !note.isEmpty {
                                 Text(note)
@@ -54,10 +60,10 @@ struct ReviewOverviewView: View {
                 .listStyle(.plain)
             }
         }
-        .navigationTitle("Review Overview")
+        .navigationTitle("Drink History")
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            await viewModel.loadTastings()
+            await viewModel.loadHistory()
         }
     }
 }
