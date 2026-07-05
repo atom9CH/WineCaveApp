@@ -12,6 +12,7 @@ struct WineCardRow: View {
         case .red: return .red
         case .white: return .yellow
         case .rose: return .pink
+        case .sparkling: return .cyan
         case nil: return .accentColor
         }
     }

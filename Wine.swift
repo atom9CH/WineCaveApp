@@ -4,12 +4,14 @@ enum WineType: String, Codable, CaseIterable {
     case red
     case white
     case rose
+    case sparkling
 
     var displayName: String {
         switch self {
         case .red: return "Red wine"
         case .white: return "White wine"
         case .rose: return "Rosé"
+        case .sparkling: return "Sparkling wine"
         }
     }
 }
@@ -62,6 +64,8 @@ struct Wine: Identifiable, Codable {
     var updatedAt: Date
     /// Nur befüllt, wenn die Abfrage "tasting(rating)" mit-selektiert (siehe WineListViewModel)
     var tastings: [TastingRating]?
+    /// Nur befüllt, wenn die Abfrage "grape_variety(name)" mit-selektiert (siehe WineSearchViewModel)
+    var grapeVarietyNames: [GrapeVarietyEmbed]?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -80,6 +84,7 @@ struct Wine: Identifiable, Codable {
         case createdAt = "created_at"
         case updatedAt = "updated_at"
         case tastings = "tasting"
+        case grapeVarietyNames = "grape_variety"
     }
 
     var averageRating: Double? {

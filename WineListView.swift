@@ -136,6 +136,9 @@ struct WineListView: View {
                 FilterChip(title: "Rosé", isSelected: viewModel.filterTypes.contains(.rose), color: .pink) {
                     viewModel.toggleType(.rose)
                 }
+                FilterChip(title: "Sparkling", isSelected: viewModel.filterTypes.contains(.sparkling), color: .cyan) {
+                    viewModel.toggleType(.sparkling)
+                }
 
                 if viewModel.activeFilterCount > 0 {
                     Divider().frame(height: 18)
