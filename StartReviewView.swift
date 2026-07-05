@@ -46,6 +46,8 @@ struct StartReviewView: View {
                     }
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background(Color("AppBackground"))
             .navigationTitle("Start a Review")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

@@ -60,9 +60,12 @@ struct WineListView: View {
                             }
                         }
                         .listStyle(.plain)
+                        .scrollContentBackground(.hidden)
+                        .background(Color("AppBackground"))
                     }
                 }
             }
+            .background(Color("AppBackground"))
 
             Button {
                 showNewWine = true

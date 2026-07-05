@@ -44,9 +44,12 @@ struct WineSearchView: View {
                         }
                     }
                     .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
+                    .background(Color("AppBackground"))
                 }
             }
         }
+        .background(Color("AppBackground"))
         .navigationTitle("Wine Search")
         .navigationBarTitleDisplayMode(.inline)
         .task {

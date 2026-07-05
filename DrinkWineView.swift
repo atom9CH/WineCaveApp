@@ -69,6 +69,8 @@ struct DrinkWineView: View {
                     }
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background(Color("AppBackground"))
             .navigationTitle("Drink a Bottle")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

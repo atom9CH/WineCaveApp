@@ -21,6 +21,7 @@ struct ConsumeBottleView: View {
                     }
                 }
             }
+            .background(Color("AppBackground"))
             .navigationTitle("Drink a Bottle")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -105,6 +106,7 @@ struct ConsumeBottleView: View {
                     }
                 }
             }
+            .scrollContentBackground(.hidden)
         }
     }
 }

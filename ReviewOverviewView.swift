@@ -52,8 +52,11 @@ struct ReviewOverviewView: View {
                     .padding(.vertical, 4)
                 }
                 .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background(Color("AppBackground"))
             }
         }
+        .background(Color("AppBackground"))
         .navigationTitle("Review Overview")
         .navigationBarTitleDisplayMode(.inline)
         .task {

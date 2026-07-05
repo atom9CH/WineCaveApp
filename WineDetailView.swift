@@ -128,6 +128,8 @@ struct WineDetailView: View {
                 }
             }
         }
+        .scrollContentBackground(.hidden)
+        .background(Color("AppBackground"))
         .navigationTitle("Edit Wine")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

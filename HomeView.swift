@@ -59,6 +59,7 @@ struct HomeView: View {
 
                 statsBar
             }
+            .background(Color("AppBackground"))
             .navigationTitle("Wine Cellar")
             .sheet(isPresented: $showStartReview) {
                 StartReviewView {}
