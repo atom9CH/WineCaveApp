@@ -33,6 +33,9 @@
 		1116CA632FF96CCD0097C881 /* ConsumeBottleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1116CA342FF96CCD0097C881 /* ConsumeBottleView.swift */; };
 		116C7EFF2FF7D67D004B9E25 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 116C7EFE2FF7D67D004B9E25 /* Supabase */; };
 		11FB005C2FFAAD1E0067BB6F /* FilterChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FB005B2FFAAD1E0067BB6F /* FilterChip.swift */; };
+		11FB005E2FFAAF450067BB6F /* HomeStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FB005D2FFAAF450067BB6F /* HomeStatsViewModel.swift */; };
+		11FB00612FFAAF4F0067BB6F /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FB00602FFAAF4F0067BB6F /* StatisticsViewModel.swift */; };
+		11FB00622FFAAF4F0067BB6F /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FB005F2FFAAF4F0067BB6F /* StatisticsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +66,9 @@
 		1116CA652FF96CD00097C881 /* WeinApp_Alexander-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeinApp_Alexander-Bridging-Header.h"; sourceTree = "<group>"; };
 		116C7ED42FF6C610004B9E25 /* WeinApp_Alexander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeinApp_Alexander.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11FB005B2FFAAD1E0067BB6F /* FilterChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterChip.swift; sourceTree = "<group>"; };
+		11FB005D2FFAAF450067BB6F /* HomeStatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStatsViewModel.swift; sourceTree = "<group>"; };
+		11FB005F2FFAAF4F0067BB6F /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
+		11FB00602FFAAF4F0067BB6F /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +93,7 @@
 				1116CA3A2FF96CCD0097C881 /* DrinkWineViewModel.swift */,
 				11FB005B2FFAAD1E0067BB6F /* FilterChip.swift */,
 				1116CA3B2FF96CCD0097C881 /* HomeView.swift */,
+				11FB005D2FFAAF450067BB6F /* HomeStatsViewModel.swift */,
 				1116CA3C2FF96CCD0097C881 /* NewWineView.swift */,
 				1116CA3D2FF96CCD0097C881 /* NewWineViewModel.swift */,
 				1116CA3E2FF96CCD0097C881 /* ReviewOverviewView.swift */,
@@ -94,6 +101,8 @@
 				1116CA402FF96CCD0097C881 /* Secrets.swift */,
 				1116CA412FF96CCD0097C881 /* StartReviewView.swift */,
 				1116CA422FF96CCD0097C881 /* StartReviewViewModel.swift */,
+				11FB005F2FFAAF4F0067BB6F /* StatisticsView.swift */,
+				11FB00602FFAAF4F0067BB6F /* StatisticsViewModel.swift */,
 				1116CA432FF96CCD0097C881 /* SupabaseService.swift */,
 				1116CA442FF96CCD0097C881 /* Tasting.swift */,
 				1116CA452FF96CCD0097C881 /* WeinApp_AlexanderApp.swift */,
@@ -216,6 +225,7 @@
 				1116CA572FF96CCD0097C881 /* ConsumeBottleViewModel.swift in Sources */,
 				1116CA582FF96CCD0097C881 /* Tasting.swift in Sources */,
 				1116CA5A2FF96CCD0097C881 /* WineDetailView.swift in Sources */,
+				11FB005E2FFAAF450067BB6F /* HomeStatsViewModel.swift in Sources */,
 				1116CA5B2FF96CCD0097C881 /* WineListViewModel.swift in Sources */,
 				1116CA5C2FF96CCD0097C881 /* NewWineView.swift in Sources */,
 				1116CA5D2FF96CCD0097C881 /* WineCardRow.swift in Sources */,
@@ -224,6 +234,8 @@
 				1116CA612FF96CCD0097C881 /* Secrets.swift in Sources */,
 				1116CA622FF96CCD0097C881 /* ReviewOverviewViewModel.swift in Sources */,
 				110EBDCC2FFA9F8700298358 /* WineSearchView.swift in Sources */,
+				11FB00612FFAAF4F0067BB6F /* StatisticsViewModel.swift in Sources */,
+				11FB00622FFAAF4F0067BB6F /* StatisticsView.swift in Sources */,
 				110EBDCD2FFA9F8700298358 /* WineSearchViewModel.swift in Sources */,
 				11FB005C2FFAAD1E0067BB6F /* FilterChip.swift in Sources */,
 				1116CA632FF96CCD0097C881 /* ConsumeBottleView.swift in Sources */,
