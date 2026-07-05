@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var showStartReview = false
+    @State private var showConsumeBottle = false
 
     private let columns = [GridItem(.flexible(), spacing: 20), GridItem(.flexible(), spacing: 20)]
 
@@ -13,6 +14,13 @@ struct HomeView: View {
                         WineListView()
                     } label: {
                         HomeTile(title: "My Wine Cellar", systemImage: "wineglass.fill", color: .accentColor)
+                    }
+                    .buttonStyle(.plain)
+
+                    Button {
+                        showConsumeBottle = true
+                    } label: {
+                        HomeTile(title: "Drink a Bottle", systemImage: "wineglass", color: .red)
                     }
                     .buttonStyle(.plain)
 
@@ -42,6 +50,9 @@ struct HomeView: View {
             .navigationTitle("Wine Cellar")
             .sheet(isPresented: $showStartReview) {
                 StartReviewView {}
+            }
+            .sheet(isPresented: $showConsumeBottle) {
+                ConsumeBottleView {}
             }
         }
     }
