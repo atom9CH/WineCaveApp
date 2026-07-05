@@ -32,6 +32,7 @@
 		1116CA622FF96CCD0097C881 /* ReviewOverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1116CA3F2FF96CCD0097C881 /* ReviewOverviewViewModel.swift */; };
 		1116CA632FF96CCD0097C881 /* ConsumeBottleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1116CA342FF96CCD0097C881 /* ConsumeBottleView.swift */; };
 		116C7EFF2FF7D67D004B9E25 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 116C7EFE2FF7D67D004B9E25 /* Supabase */; };
+		11FB005C2FFAAD1E0067BB6F /* FilterChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FB005B2FFAAD1E0067BB6F /* FilterChip.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 		1116CA4B2FF96CCD0097C881 /* WineListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineListViewModel.swift; sourceTree = "<group>"; };
 		1116CA652FF96CD00097C881 /* WeinApp_Alexander-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeinApp_Alexander-Bridging-Header.h"; sourceTree = "<group>"; };
 		116C7ED42FF6C610004B9E25 /* WeinApp_Alexander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeinApp_Alexander.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		11FB005B2FFAAD1E0067BB6F /* FilterChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterChip.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				1116CA352FF96CCD0097C881 /* ConsumeBottleViewModel.swift */,
 				1116CA392FF96CCD0097C881 /* DrinkWineView.swift */,
 				1116CA3A2FF96CCD0097C881 /* DrinkWineViewModel.swift */,
+				11FB005B2FFAAD1E0067BB6F /* FilterChip.swift */,
 				1116CA3B2FF96CCD0097C881 /* HomeView.swift */,
 				1116CA3C2FF96CCD0097C881 /* NewWineView.swift */,
 				1116CA3D2FF96CCD0097C881 /* NewWineViewModel.swift */,
@@ -222,6 +225,7 @@
 				1116CA622FF96CCD0097C881 /* ReviewOverviewViewModel.swift in Sources */,
 				110EBDCC2FFA9F8700298358 /* WineSearchView.swift in Sources */,
 				110EBDCD2FFA9F8700298358 /* WineSearchViewModel.swift in Sources */,
+				11FB005C2FFAAD1E0067BB6F /* FilterChip.swift in Sources */,
 				1116CA632FF96CCD0097C881 /* ConsumeBottleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

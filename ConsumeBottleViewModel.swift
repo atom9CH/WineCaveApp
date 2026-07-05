@@ -8,6 +8,22 @@ final class ConsumeBottleViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var isUpdating = false
     @Published var errorMessage: String?
+    @Published var filterTypes: Set<WineType> = []
+
+    var filteredWines: [Wine] {
+        guard !filterTypes.isEmpty else { return wines }
+        return wines.filter { wine in
+            wine.type.map { filterTypes.contains($0) } ?? false
+        }
+    }
+
+    func toggleType(_ type: WineType) {
+        if filterTypes.contains(type) {
+            filterTypes.remove(type)
+        } else {
+            filterTypes.insert(type)
+        }
+    }
 
     func loadAvailableWines() async {
         isLoading = true
