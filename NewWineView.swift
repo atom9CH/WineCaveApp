@@ -1,13 +1,38 @@
 import SwiftUI
+import PhotosUI
 
 struct NewWineView: View {
     @StateObject private var viewModel = NewWineViewModel()
     @Environment(\.dismiss) private var dismiss
     var onSaved: () -> Void
+    @State private var selectedPhotoItem: PhotosPickerItem?
 
     var body: some View {
         NavigationStack {
             Form {
+                Section("Photo") {
+                    if let image = viewModel.selectedImage {
+                        HStack {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 70, height: 70)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                            Spacer()
+                            Button(role: .destructive) {
+                                viewModel.selectedImage = nil
+                                selectedPhotoItem = nil
+                            } label: {
+                                Text("Remove")
+                            }
+                        }
+                    } else {
+                        PhotosPicker(selection: $selectedPhotoItem, matching: .images) {
+                            Label("Add Photo", systemImage: "camera")
+                        }
+                    }
+                }
+
                 Section("Wine") {
                     TextField("Name", text: $viewModel.name)
                     Picker("Type", selection: $viewModel.type) {
@@ -84,6 +109,15 @@ struct NewWineView: View {
                     ProgressView("Saving…")
                         .padding()
                         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+                }
+            }
+            .onChange(of: selectedPhotoItem) { newItem in
+                Task {
+                    if let newItem,
+                       let data = try? await newItem.loadTransferable(type: Data.self),
+                       let uiImage = UIImage(data: data) {
+                        viewModel.selectedImage = uiImage
+                    }
                 }
             }
         }

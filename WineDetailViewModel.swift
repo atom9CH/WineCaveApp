@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 import Supabase
+import UIKit
 
 @MainActor
 final class WineDetailViewModel: ObservableObject {
@@ -17,6 +18,9 @@ final class WineDetailViewModel: ObservableObject {
     @Published var currentQuantity = 1
     @Published var grapeVarieties: [String] = [""]
     @Published var tastings: [Tasting] = []
+    @Published var existingPhotoURL: String?
+    @Published var selectedImage: UIImage?
+    @Published var removeExistingPhoto = false
 
     @Published var isSaving = false
     @Published var errorMessage: String?
@@ -32,6 +36,7 @@ final class WineDetailViewModel: ObservableObject {
         self.purchaseLocation = wine.purchaseLocation ?? .denner
         self.purchaseLocationOtherText = wine.purchaseLocationOtherText ?? ""
         self.currentQuantity = wine.currentQuantity
+        self.existingPhotoURL = wine.photoURL
     }
 
     var isValid: Bool {
@@ -94,6 +99,7 @@ final class WineDetailViewModel: ObservableObject {
         let purchase_location: String
         let purchase_location_other_text: String?
         let current_quantity: Int
+        let photo_url: String?
     }
 
     private struct GrapeVarietyPayload: Encodable {
@@ -101,24 +107,44 @@ final class WineDetailViewModel: ObservableObject {
         let name: String
     }
 
+    private func resolvePhotoURL() async throws -> String? {
+        if let selectedImage, let data = selectedImage.jpegData(compressionQuality: 0.8) {
+            let path = "\(UUID().uuidString).jpg"
+            try await SupabaseService.client.storage
+                .from("wine-photos")
+                .upload(path, data: data, options: FileOptions(contentType: "image/jpeg"))
+            return try SupabaseService.client.storage
+                .from("wine-photos")
+                .getPublicURL(path: path)
+                .absoluteString
+        }
+        if removeExistingPhoto {
+            return nil
+        }
+        return existingPhotoURL
+    }
+
     func save() async -> Bool {
         guard isValid else { return false }
         isSaving = true
         errorMessage = nil
 
-        let payload = WineUpdatePayload(
-            name: name.trimmingCharacters(in: .whitespaces),
-            type: type.rawValue,
-            vintage: Int(vintage),
-            country: country.isEmpty ? nil : country,
-            region: region.isEmpty ? nil : region,
-            storage_location: storageLocation.rawValue,
-            purchase_location: purchaseLocation.rawValue,
-            purchase_location_other_text: purchaseLocation == .other ? purchaseLocationOtherText : nil,
-            current_quantity: currentQuantity
-        )
-
         do {
+            let photoURL = try await resolvePhotoURL()
+
+            let payload = WineUpdatePayload(
+                name: name.trimmingCharacters(in: .whitespaces),
+                type: type.rawValue,
+                vintage: Int(vintage),
+                country: country.isEmpty ? nil : country,
+                region: region.isEmpty ? nil : region,
+                storage_location: storageLocation.rawValue,
+                purchase_location: purchaseLocation.rawValue,
+                purchase_location_other_text: purchaseLocation == .other ? purchaseLocationOtherText : nil,
+                current_quantity: currentQuantity,
+                photo_url: photoURL
+            )
+
             try await SupabaseService.client
                 .from("wine")
                 .update(payload)

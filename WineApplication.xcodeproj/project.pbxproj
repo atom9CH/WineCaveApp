@@ -32,6 +32,7 @@
 		1116CA622FF96CCD0097C881 /* ReviewOverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1116CA3F2FF96CCD0097C881 /* ReviewOverviewViewModel.swift */; };
 		1116CA632FF96CCD0097C881 /* ConsumeBottleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1116CA342FF96CCD0097C881 /* ConsumeBottleView.swift */; };
 		116C7EFF2FF7D67D004B9E25 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 116C7EFE2FF7D67D004B9E25 /* Supabase */; };
+		11C555742FFE4E0F00242F0F /* NewWineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C555732FFE4E0F00242F0F /* NewWineView.swift */; };
 		11FB005C2FFAAD1E0067BB6F /* FilterChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FB005B2FFAAD1E0067BB6F /* FilterChip.swift */; };
 		11FB005E2FFAAF450067BB6F /* HomeStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FB005D2FFAAF450067BB6F /* HomeStatsViewModel.swift */; };
 		11FB00612FFAAF4F0067BB6F /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FB00602FFAAF4F0067BB6F /* StatisticsViewModel.swift */; };
@@ -65,6 +66,7 @@
 		1116CA4B2FF96CCD0097C881 /* WineListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineListViewModel.swift; sourceTree = "<group>"; };
 		1116CA652FF96CD00097C881 /* WeinApp_Alexander-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeinApp_Alexander-Bridging-Header.h"; sourceTree = "<group>"; };
 		116C7ED42FF6C610004B9E25 /* WeinApp_Alexander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeinApp_Alexander.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		11C555732FFE4E0F00242F0F /* NewWineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWineView.swift; sourceTree = "<group>"; };
 		11FB005B2FFAAD1E0067BB6F /* FilterChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterChip.swift; sourceTree = "<group>"; };
 		11FB005D2FFAAF450067BB6F /* HomeStatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStatsViewModel.swift; sourceTree = "<group>"; };
 		11FB005F2FFAAF4F0067BB6F /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				1116CA3A2FF96CCD0097C881 /* DrinkWineViewModel.swift */,
 				11FB005B2FFAAD1E0067BB6F /* FilterChip.swift */,
 				1116CA3B2FF96CCD0097C881 /* HomeView.swift */,
+				11C555732FFE4E0F00242F0F /* NewWineView.swift */,
 				11FB005D2FFAAF450067BB6F /* HomeStatsViewModel.swift */,
 				1116CA3C2FF96CCD0097C881 /* NewWineView.swift */,
 				1116CA3D2FF96CCD0097C881 /* NewWineViewModel.swift */,
@@ -212,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11C555742FFE4E0F00242F0F /* NewWineView.swift in Sources */,
 				1116CA4D2FF96CCD0097C881 /* WineListView.swift in Sources */,
 				1116CA4E2FF96CCD0097C881 /* ReviewOverviewView.swift in Sources */,
 				1116CA4F2FF96CCD0097C881 /* NewWineViewModel.swift in Sources */,
@@ -372,6 +376,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4GB7TS5AGN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -406,6 +411,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4GB7TS5AGN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

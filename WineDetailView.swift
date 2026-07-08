@@ -1,4 +1,5 @@
 import SwiftUI
+import PhotosUI
 
 struct WineDetailView: View {
     @StateObject private var viewModel: WineDetailViewModel
@@ -6,6 +7,7 @@ struct WineDetailView: View {
     var onSaved: () -> Void
     @State private var showDeleteConfirmation = false
     @State private var showDrinkSheet = false
+    @State private var selectedPhotoItem: PhotosPickerItem?
 
     init(wine: Wine, onSaved: @escaping () -> Void) {
         _viewModel = StateObject(wrappedValue: WineDetailViewModel(wine: wine))
@@ -21,6 +23,45 @@ struct WineDetailView: View {
                     Label("Rate & Drink", systemImage: "star.fill")
                 }
                 .disabled(viewModel.currentQuantity <= 0)
+            }
+
+            Section("Photo") {
+                if let newImage = viewModel.selectedImage {
+                    HStack {
+                        Image(uiImage: newImage)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 70, height: 70)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        Spacer()
+                        Button(role: .destructive) {
+                            viewModel.selectedImage = nil
+                            selectedPhotoItem = nil
+                        } label: {
+                            Text("Remove")
+                        }
+                    }
+                } else if !viewModel.removeExistingPhoto, let urlString = viewModel.existingPhotoURL, let url = URL(string: urlString) {
+                    HStack {
+                        AsyncImage(url: url) { image in
+                            image.resizable().scaledToFill()
+                        } placeholder: {
+                            Color.gray.opacity(0.15)
+                        }
+                        .frame(width: 70, height: 70)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        Spacer()
+                        Button(role: .destructive) {
+                            viewModel.removeExistingPhoto = true
+                        } label: {
+                            Text("Remove")
+                        }
+                    }
+                } else {
+                    PhotosPicker(selection: $selectedPhotoItem, matching: .images) {
+                        Label("Add Photo", systemImage: "camera")
+                    }
+                }
             }
 
             Section("Wine") {
@@ -170,6 +211,15 @@ struct WineDetailView: View {
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("This action cannot be undone.")
+        }
+        .onChange(of: selectedPhotoItem) { newItem in
+            Task {
+                if let newItem,
+                   let data = try? await newItem.loadTransferable(type: Data.self),
+                   let uiImage = UIImage(data: data) {
+                    viewModel.selectedImage = uiImage
+                }
+            }
         }
     }
 }

@@ -19,13 +19,23 @@ struct WineCardRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(isDepleted ? Color.gray.opacity(0.15) : typeColor.opacity(0.15))
-                    .frame(width: 46, height: 46)
-                Image(systemName: isDepleted ? "wineglass" : "wineglass.fill")
-                    .font(.system(size: 20))
-                    .foregroundStyle(isDepleted ? .gray : typeColor)
+            if let urlString = wine.photoURL, let url = URL(string: urlString) {
+                AsyncImage(url: url) { image in
+                    image.resizable().scaledToFill()
+                } placeholder: {
+                    Color.gray.opacity(0.1)
+                }
+                .frame(width: 46, height: 46)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+            } else {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(isDepleted ? Color.gray.opacity(0.15) : typeColor.opacity(0.15))
+                        .frame(width: 46, height: 46)
+                    Image(systemName: isDepleted ? "wineglass" : "wineglass.fill")
+                        .font(.system(size: 20))
+                        .foregroundStyle(isDepleted ? .gray : typeColor)
+                }
             }
 
             VStack(alignment: .leading, spacing: 2) {

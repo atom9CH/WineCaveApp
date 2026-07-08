@@ -6,11 +6,13 @@ import Supabase
 final class HomeStatsViewModel: ObservableObject {
     @Published var totalBottles = 0
     @Published var drunkLast30Days = 0
+    @Published var runningLowWines: [Wine] = []
 
     func load() async {
         async let bottlesTask: Void = loadBottles()
         async let drunkTask: Void = loadDrunkLast30Days()
-        _ = await (bottlesTask, drunkTask)
+        async let lowTask: Void = loadRunningLow()
+        _ = await (bottlesTask, drunkTask, lowTask)
     }
 
     private func loadBottles() async {
@@ -24,6 +26,21 @@ final class HomeStatsViewModel: ObservableObject {
             totalBottles = wines.reduce(0) { $0 + $1.currentQuantity }
         } catch {
             // Kompakte Leiste: Fehler hier bewusst nicht anzeigen, nur ignorieren
+        }
+    }
+
+    private func loadRunningLow() async {
+        do {
+            runningLowWines = try await SupabaseService.client
+                .from("wine")
+                .select()
+                .eq("status", value: "available")
+                .lte("current_quantity", value: 1)
+                .order("name", ascending: true)
+                .execute()
+                .value
+        } catch {
+            // ignorieren
         }
     }
 

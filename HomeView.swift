@@ -3,7 +3,11 @@ import SwiftUI
 struct HomeView: View {
     @State private var showStartReview = false
     @State private var showConsumeBottle = false
+    @State private var showAddWine = false
     @StateObject private var statsViewModel = HomeStatsViewModel()
+
+    /// Bei Bedarf anpassen, falls die App mal von jemand anderem genutzt wird
+    private let userName = "Alexander"
 
     private let columns = [GridItem(.flexible(), spacing: 20), GridItem(.flexible(), spacing: 20)]
 
@@ -11,11 +15,34 @@ struct HomeView: View {
         NavigationStack {
             VStack(spacing: 0) {
                 ScrollView {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("\(greeting), \(userName)")
+                            .font(.system(size: 24, weight: .bold))
+                        Text(formattedDate)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 8)
+                    .padding(.bottom, 12)
+
+                    if !statsViewModel.runningLowWines.isEmpty {
+                        runningLowSection
+                    }
+
                     LazyVGrid(columns: columns, spacing: 20) {
                         NavigationLink {
                             WineListView()
                         } label: {
                             HomeTile(title: "My Wine Cellar", systemImage: "wineglass.fill", color: .accentColor)
+                        }
+                        .buttonStyle(.plain)
+
+                        Button {
+                            showAddWine = true
+                        } label: {
+                            HomeTile(title: "Add Wine", systemImage: "plus.circle.fill", color: .mint)
                         }
                         .buttonStyle(.plain)
 
@@ -54,7 +81,8 @@ struct HomeView: View {
                         }
                         .buttonStyle(.plain)
                     }
-                    .padding(20)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 20)
                 }
 
                 statsBar
@@ -69,10 +97,57 @@ struct HomeView: View {
                     Task { await statsViewModel.load() }
                 }
             }
+            .sheet(isPresented: $showAddWine) {
+                NewWineView {
+                    Task { await statsViewModel.load() }
+                }
+            }
             .task {
                 await statsViewModel.load()
             }
         }
+    }
+
+    private var greeting: String {
+        let hour = Calendar.current.component(.hour, from: Date())
+        switch hour {
+        case 5..<12: return "Good morning"
+        case 12..<18: return "Good afternoon"
+        default: return "Good evening"
+        }
+    }
+
+    private var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        return formatter.string(from: Date())
+    }
+
+    private var runningLowSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Running Low")
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(.secondary)
+                .textCase(.uppercase)
+                .padding(.horizontal, 20)
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 10) {
+                    ForEach(statsViewModel.runningLowWines) { wine in
+                        NavigationLink {
+                            WineDetailView(wine: wine) {
+                                Task { await statsViewModel.load() }
+                            }
+                        } label: {
+                            RunningLowCard(wine: wine)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.horizontal, 20)
+            }
+        }
+        .padding(.bottom, 16)
     }
 
     private var statsBar: some View {
@@ -93,6 +168,35 @@ struct HomeView: View {
         }
         .padding(.vertical, 14)
         .background(Color(.secondarySystemGroupedBackground))
+    }
+}
+
+private struct RunningLowCard: View {
+    let wine: Wine
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 4) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.system(size: 11))
+                    .foregroundStyle(.orange)
+                Text("\(wine.currentQuantity) left")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(.orange)
+            }
+            Text(wine.name)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundStyle(.primary)
+                .lineLimit(2)
+                .frame(width: 130, alignment: .leading)
+        }
+        .padding(12)
+        .background(Color.orange.opacity(0.12))
+        .clipShape(RoundedRectangle(cornerRadius: 14))
+        .overlay(
+            RoundedRectangle(cornerRadius: 14)
+                .strokeBorder(Color.orange.opacity(0.25), lineWidth: 1)
+        )
     }
 }
 
