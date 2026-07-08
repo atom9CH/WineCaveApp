@@ -50,6 +50,7 @@ final class ConsumeBottleViewModel: ObservableObject {
         let wine_id: UUID
         let rating: Int?
         let note: String?
+        let user_id: UUID?
     }
 
     /// Reduziert die Menge um 1 und legt einen Konsum-Eintrag OHNE Bewertung an.
@@ -68,7 +69,7 @@ final class ConsumeBottleViewModel: ObservableObject {
 
             try await SupabaseService.client
                 .from("tasting")
-                .insert(PlainTastingPayload(wine_id: wine.id, rating: nil, note: nil))
+                .insert(PlainTastingPayload(wine_id: wine.id, rating: nil, note: nil, user_id: SupabaseService.currentUserId))
                 .execute()
 
             await loadAvailableWines()

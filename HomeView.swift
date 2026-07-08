@@ -1,9 +1,11 @@
 import SwiftUI
 
 struct HomeView: View {
+    @ObservedObject var authViewModel: AuthViewModel
     @State private var showStartReview = false
     @State private var showConsumeBottle = false
     @State private var showAddWine = false
+    @State private var showSignOutConfirmation = false
     @StateObject private var statsViewModel = HomeStatsViewModel()
 
     /// Bei Bedarf anpassen, falls die App mal von jemand anderem genutzt wird
@@ -80,6 +82,13 @@ struct HomeView: View {
                             HomeTile(title: "Statistics", systemImage: "chart.bar.fill", color: .green)
                         }
                         .buttonStyle(.plain)
+
+                        NavigationLink {
+                            AccountView(authViewModel: authViewModel)
+                        } label: {
+                            HomeTile(title: "My Account", systemImage: "person.crop.circle.fill", color: .purple)
+                        }
+                        .buttonStyle(.plain)
                     }
                     .padding(.horizontal, 20)
                     .padding(.bottom, 20)
@@ -89,6 +98,21 @@ struct HomeView: View {
             }
             .background(Color("AppBackground"))
             .navigationTitle("Wine Cellar")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showSignOutConfirmation = true
+                    } label: {
+                        Image(systemName: "rectangle.portrait.and.arrow.right")
+                    }
+                }
+            }
+            .alert("Sign out?", isPresented: $showSignOutConfirmation) {
+                Button("Sign Out", role: .destructive) {
+                    Task { await authViewModel.signOut() }
+                }
+                Button("Cancel", role: .cancel) {}
+            }
             .sheet(isPresented: $showStartReview) {
                 StartReviewView {}
             }
@@ -255,5 +279,5 @@ private struct HomeTile: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(authViewModel: AuthViewModel())
 }

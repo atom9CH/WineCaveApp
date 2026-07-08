@@ -33,6 +33,12 @@
 		1116CA632FF96CCD0097C881 /* ConsumeBottleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1116CA342FF96CCD0097C881 /* ConsumeBottleView.swift */; };
 		116C7EFF2FF7D67D004B9E25 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 116C7EFE2FF7D67D004B9E25 /* Supabase */; };
 		11C555742FFE4E0F00242F0F /* NewWineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C555732FFE4E0F00242F0F /* NewWineView.swift */; };
+		11C555782FFE521900242F0F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C555762FFE521900242F0F /* LoginView.swift */; };
+		11C555792FFE521900242F0F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C555752FFE521900242F0F /* AuthViewModel.swift */; };
+		11C5557A2FFE521900242F0F /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C555772FFE521900242F0F /* RootView.swift */; };
+		11C5557C2FFE548E00242F0F /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C5557B2FFE548E00242F0F /* AccountView.swift */; };
+		11C5557E2FFE55E200242F0F /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C5557D2FFE55E200242F0F /* AccountView.swift */; };
+		11C555802FFE55E900242F0F /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C5557F2FFE55E900242F0F /* ChangePasswordView.swift */; };
 		11FB005C2FFAAD1E0067BB6F /* FilterChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FB005B2FFAAD1E0067BB6F /* FilterChip.swift */; };
 		11FB005E2FFAAF450067BB6F /* HomeStatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FB005D2FFAAF450067BB6F /* HomeStatsViewModel.swift */; };
 		11FB00612FFAAF4F0067BB6F /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11FB00602FFAAF4F0067BB6F /* StatisticsViewModel.swift */; };
@@ -67,6 +73,12 @@
 		1116CA652FF96CD00097C881 /* WeinApp_Alexander-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeinApp_Alexander-Bridging-Header.h"; sourceTree = "<group>"; };
 		116C7ED42FF6C610004B9E25 /* WeinApp_Alexander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeinApp_Alexander.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11C555732FFE4E0F00242F0F /* NewWineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWineView.swift; sourceTree = "<group>"; };
+		11C555752FFE521900242F0F /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		11C555762FFE521900242F0F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		11C555772FFE521900242F0F /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		11C5557B2FFE548E00242F0F /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		11C5557D2FFE55E200242F0F /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		11C5557F2FFE55E900242F0F /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		11FB005B2FFAAD1E0067BB6F /* FilterChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterChip.swift; sourceTree = "<group>"; };
 		11FB005D2FFAAF450067BB6F /* HomeStatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStatsViewModel.swift; sourceTree = "<group>"; };
 		11FB005F2FFAAF4F0067BB6F /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
@@ -89,18 +101,23 @@
 			isa = PBXGroup;
 			children = (
 				1116CA332FF96CCD0097C881 /* Assets.xcassets */,
+				11C555752FFE521900242F0F /* AuthViewModel.swift */,
 				1116CA342FF96CCD0097C881 /* ConsumeBottleView.swift */,
 				1116CA352FF96CCD0097C881 /* ConsumeBottleViewModel.swift */,
 				1116CA392FF96CCD0097C881 /* DrinkWineView.swift */,
 				1116CA3A2FF96CCD0097C881 /* DrinkWineViewModel.swift */,
 				11FB005B2FFAAD1E0067BB6F /* FilterChip.swift */,
-				1116CA3B2FF96CCD0097C881 /* HomeView.swift */,
-				11C555732FFE4E0F00242F0F /* NewWineView.swift */,
+				116C7EFD2FF7D67D004B9E25 /* Frameworks */,
 				11FB005D2FFAAF450067BB6F /* HomeStatsViewModel.swift */,
+				1116CA3B2FF96CCD0097C881 /* HomeView.swift */,
+				11C555762FFE521900242F0F /* LoginView.swift */,
+				11C555732FFE4E0F00242F0F /* NewWineView.swift */,
 				1116CA3C2FF96CCD0097C881 /* NewWineView.swift */,
 				1116CA3D2FF96CCD0097C881 /* NewWineViewModel.swift */,
+				116C7ED52FF6C610004B9E25 /* Products */,
 				1116CA3E2FF96CCD0097C881 /* ReviewOverviewView.swift */,
 				1116CA3F2FF96CCD0097C881 /* ReviewOverviewViewModel.swift */,
+				11C555772FFE521900242F0F /* RootView.swift */,
 				1116CA402FF96CCD0097C881 /* Secrets.swift */,
 				1116CA412FF96CCD0097C881 /* StartReviewView.swift */,
 				1116CA422FF96CCD0097C881 /* StartReviewViewModel.swift */,
@@ -108,7 +125,11 @@
 				11FB00602FFAAF4F0067BB6F /* StatisticsViewModel.swift */,
 				1116CA432FF96CCD0097C881 /* SupabaseService.swift */,
 				1116CA442FF96CCD0097C881 /* Tasting.swift */,
+				1116CA652FF96CD00097C881 /* WeinApp_Alexander-Bridging-Header.h */,
 				1116CA452FF96CCD0097C881 /* WeinApp_AlexanderApp.swift */,
+				11C5557B2FFE548E00242F0F /* AccountView.swift */,
+				11C5557D2FFE55E200242F0F /* AccountView.swift */,
+				11C5557F2FFE55E900242F0F /* ChangePasswordView.swift */,
 				1116CA462FF96CCD0097C881 /* Wine.swift */,
 				1116CA472FF96CCD0097C881 /* WineCardRow.swift */,
 				1116CA482FF96CCD0097C881 /* WineDetailView.swift */,
@@ -117,9 +138,6 @@
 				1116CA4B2FF96CCD0097C881 /* WineListViewModel.swift */,
 				110EBDCA2FFA9F8700298358 /* WineSearchView.swift */,
 				110EBDCB2FFA9F8700298358 /* WineSearchViewModel.swift */,
-				116C7EFD2FF7D67D004B9E25 /* Frameworks */,
-				116C7ED52FF6C610004B9E25 /* Products */,
-				1116CA652FF96CD00097C881 /* WeinApp_Alexander-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -218,6 +236,7 @@
 				11C555742FFE4E0F00242F0F /* NewWineView.swift in Sources */,
 				1116CA4D2FF96CCD0097C881 /* WineListView.swift in Sources */,
 				1116CA4E2FF96CCD0097C881 /* ReviewOverviewView.swift in Sources */,
+				11C555802FFE55E900242F0F /* ChangePasswordView.swift in Sources */,
 				1116CA4F2FF96CCD0097C881 /* NewWineViewModel.swift in Sources */,
 				1116CA502FF96CCD0097C881 /* StartReviewViewModel.swift in Sources */,
 				1116CA512FF96CCD0097C881 /* HomeView.swift in Sources */,
@@ -230,13 +249,18 @@
 				1116CA582FF96CCD0097C881 /* Tasting.swift in Sources */,
 				1116CA5A2FF96CCD0097C881 /* WineDetailView.swift in Sources */,
 				11FB005E2FFAAF450067BB6F /* HomeStatsViewModel.swift in Sources */,
+				11C5557E2FFE55E200242F0F /* AccountView.swift in Sources */,
 				1116CA5B2FF96CCD0097C881 /* WineListViewModel.swift in Sources */,
 				1116CA5C2FF96CCD0097C881 /* NewWineView.swift in Sources */,
 				1116CA5D2FF96CCD0097C881 /* WineCardRow.swift in Sources */,
 				1116CA5F2FF96CCD0097C881 /* Wine.swift in Sources */,
 				1116CA602FF96CCD0097C881 /* WeinApp_AlexanderApp.swift in Sources */,
+				11C5557C2FFE548E00242F0F /* AccountView.swift in Sources */,
 				1116CA612FF96CCD0097C881 /* Secrets.swift in Sources */,
 				1116CA622FF96CCD0097C881 /* ReviewOverviewViewModel.swift in Sources */,
+				11C555782FFE521900242F0F /* LoginView.swift in Sources */,
+				11C555792FFE521900242F0F /* AuthViewModel.swift in Sources */,
+				11C5557A2FFE521900242F0F /* RootView.swift in Sources */,
 				110EBDCC2FFA9F8700298358 /* WineSearchView.swift in Sources */,
 				11FB00612FFAAF4F0067BB6F /* StatisticsViewModel.swift in Sources */,
 				11FB00622FFAAF4F0067BB6F /* StatisticsView.swift in Sources */,

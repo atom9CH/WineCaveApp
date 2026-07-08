@@ -28,6 +28,7 @@ final class DrinkWineViewModel: ObservableObject {
         let rating: Int
         let note: String?
         let photo_url: String?
+        let user_id: UUID?
     }
 
     /// Reduziert die Menge um 1, lädt optional ein Foto hoch und legt einen Tasting-Eintrag an.
@@ -61,7 +62,8 @@ final class DrinkWineViewModel: ObservableObject {
                 wine_id: wineId,
                 rating: rating,
                 note: trimmedNote.isEmpty ? nil : trimmedNote,
-                photo_url: photoURL
+                photo_url: photoURL,
+                user_id: SupabaseService.currentUserId
             )
             try await SupabaseService.client
                 .from("tasting")

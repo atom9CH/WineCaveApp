@@ -10,7 +10,7 @@ import SwiftUI
 struct WeinApp_AlexanderApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            RootView()
             }
         }
     }

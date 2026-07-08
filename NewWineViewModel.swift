@@ -36,11 +36,13 @@ final class NewWineViewModel: ObservableObject {
         let original_quantity: Int
         let current_quantity: Int
         let photo_url: String?
+        let user_id: UUID?
     }
 
     private struct GrapeVarietyPayload: Encodable {
         let wine_id: UUID
         let name: String
+        let user_id: UUID?
     }
 
     private func uploadPhotoIfNeeded() async throws -> String? {
@@ -77,7 +79,8 @@ final class NewWineViewModel: ObservableObject {
                 purchase_location_other_text: purchaseLocation == .other ? purchaseLocationOtherText : nil,
                 original_quantity: quantity,
                 current_quantity: quantity,
-                photo_url: photoURL
+                photo_url: photoURL,
+                user_id: SupabaseService.currentUserId
             )
 
             let insertedWine: Wine = try await SupabaseService.client
@@ -94,7 +97,7 @@ final class NewWineViewModel: ObservableObject {
 
             if !validVarieties.isEmpty {
                 let varietyPayload = validVarieties.map {
-                    GrapeVarietyPayload(wine_id: insertedWine.id, name: $0)
+                    GrapeVarietyPayload(wine_id: insertedWine.id, name: $0, user_id: SupabaseService.currentUserId)
                 }
                 try await SupabaseService.client
                     .from("grape_variety")

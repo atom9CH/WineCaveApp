@@ -105,6 +105,7 @@ final class WineDetailViewModel: ObservableObject {
     private struct GrapeVarietyPayload: Encodable {
         let wine_id: UUID
         let name: String
+        let user_id: UUID?
     }
 
     private func resolvePhotoURL() async throws -> String? {
@@ -164,7 +165,7 @@ final class WineDetailViewModel: ObservableObject {
 
             if !validVarieties.isEmpty {
                 let varietyPayload = validVarieties.map {
-                    GrapeVarietyPayload(wine_id: wineId, name: $0)
+                    GrapeVarietyPayload(wine_id: wineId, name: $0, user_id: SupabaseService.currentUserId)
                 }
                 try await SupabaseService.client
                     .from("grape_variety")
