@@ -13,6 +13,16 @@ struct HomeView: View {
 
     private let columns = [GridItem(.flexible(), spacing: 20), GridItem(.flexible(), spacing: 20)]
 
+    private static let defaultTileOrder = ["cellar", "addWine", "drink", "review", "search", "overview", "stats", "account"]
+    private static let tileOrderKey = "homeTileOrder"
+
+    @State private var tileOrder: [String] = {
+        if let saved = UserDefaults.standard.array(forKey: HomeView.tileOrderKey) as? [String], !saved.isEmpty {
+            return saved
+        }
+        return HomeView.defaultTileOrder
+    }()
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -34,64 +44,27 @@ struct HomeView: View {
                     }
 
                     LazyVGrid(columns: columns, spacing: 20) {
-                        NavigationLink {
-                            WineListView()
-                        } label: {
-                            HomeTile(title: "My Wine Cellar", systemImage: "wineglass.fill", color: .accentColor)
+                        ForEach(tileOrder, id: \.self) { id in
+                            tileView(for: id)
+                                .draggable(id) {
+                                    tileView(for: id)
+                                        .frame(width: 150, height: 150)
+                                }
+                                .dropDestination(for: String.self) { items, _ in
+                                    guard let draggedId = items.first else { return false }
+                                    moveTile(draggedId, before: id)
+                                    return true
+                                }
                         }
-                        .buttonStyle(.plain)
-
-                        Button {
-                            showAddWine = true
-                        } label: {
-                            HomeTile(title: "Add Wine", systemImage: "plus.circle.fill", color: .mint)
-                        }
-                        .buttonStyle(.plain)
-
-                        Button {
-                            showConsumeBottle = true
-                        } label: {
-                            HomeTile(title: "Drink a Bottle", systemImage: "wineglass", color: .red)
-                        }
-                        .buttonStyle(.plain)
-
-                        Button {
-                            showStartReview = true
-                        } label: {
-                            HomeTile(title: "Start a Review", systemImage: "star.fill", color: .orange)
-                        }
-                        .buttonStyle(.plain)
-
-                        NavigationLink {
-                            WineSearchView()
-                        } label: {
-                            HomeTile(title: "Wine Search", systemImage: "magnifyingglass", color: .indigo)
-                        }
-                        .buttonStyle(.plain)
-
-                        NavigationLink {
-                            ReviewOverviewView()
-                        } label: {
-                            HomeTile(title: "Review Overview", systemImage: "list.bullet.rectangle.portrait", color: .teal)
-                        }
-                        .buttonStyle(.plain)
-
-                        NavigationLink {
-                            StatisticsView()
-                        } label: {
-                            HomeTile(title: "Statistics", systemImage: "chart.bar.fill", color: .green)
-                        }
-                        .buttonStyle(.plain)
-
-                        NavigationLink {
-                            AccountView(authViewModel: authViewModel)
-                        } label: {
-                            HomeTile(title: "My Account", systemImage: "person.crop.circle.fill", color: .purple)
-                        }
-                        .buttonStyle(.plain)
                     }
                     .padding(.horizontal, 20)
-                    .padding(.bottom, 20)
+
+                    Text("Press and hold a tile to rearrange")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, 10)
+                        .padding(.bottom, 20)
                 }
 
                 statsBar
@@ -130,6 +103,89 @@ struct HomeView: View {
                 await statsViewModel.load()
             }
         }
+    }
+
+    @ViewBuilder
+    private func tileView(for id: String) -> some View {
+        switch id {
+        case "cellar":
+            NavigationLink {
+                WineListView()
+            } label: {
+                HomeTile(title: "My Wine Cellar", systemImage: "wineglass.fill", color: .accentColor)
+            }
+            .buttonStyle(.plain)
+
+        case "addWine":
+            Button {
+                showAddWine = true
+            } label: {
+                HomeTile(title: "Add Wine", systemImage: "plus.circle.fill", color: .mint)
+            }
+            .buttonStyle(.plain)
+
+        case "drink":
+            Button {
+                showConsumeBottle = true
+            } label: {
+                HomeTile(title: "Drink a Bottle", systemImage: "wineglass", color: .red)
+            }
+            .buttonStyle(.plain)
+
+        case "review":
+            Button {
+                showStartReview = true
+            } label: {
+                HomeTile(title: "Start a Review", systemImage: "star.fill", color: .orange)
+            }
+            .buttonStyle(.plain)
+
+        case "search":
+            NavigationLink {
+                WineSearchView()
+            } label: {
+                HomeTile(title: "Wine Search", systemImage: "magnifyingglass", color: .indigo)
+            }
+            .buttonStyle(.plain)
+
+        case "overview":
+            NavigationLink {
+                ReviewOverviewView()
+            } label: {
+                HomeTile(title: "Review Overview", systemImage: "list.bullet.rectangle.portrait", color: .teal)
+            }
+            .buttonStyle(.plain)
+
+        case "stats":
+            NavigationLink {
+                StatisticsView()
+            } label: {
+                HomeTile(title: "Statistics", systemImage: "chart.bar.fill", color: .green)
+            }
+            .buttonStyle(.plain)
+
+        case "account":
+            NavigationLink {
+                AccountView(authViewModel: authViewModel)
+            } label: {
+                HomeTile(title: "My Account", systemImage: "person.crop.circle.fill", color: .purple)
+            }
+            .buttonStyle(.plain)
+
+        default:
+            EmptyView()
+        }
+    }
+
+    private func moveTile(_ draggedId: String, before targetId: String) {
+        guard draggedId != targetId,
+              let fromIndex = tileOrder.firstIndex(of: draggedId) else { return }
+        withAnimation {
+            tileOrder.remove(at: fromIndex)
+            let toIndex = tileOrder.firstIndex(of: targetId) ?? tileOrder.count
+            tileOrder.insert(draggedId, at: toIndex)
+        }
+        UserDefaults.standard.set(tileOrder, forKey: Self.tileOrderKey)
     }
 
     private var greeting: String {
